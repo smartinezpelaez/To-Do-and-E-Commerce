@@ -6,5 +6,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'todoapp';
+  title = 'todo-app';
+  welcome = 'Hola';
+  tasks = [
+    'Instalar angula',
+    'Crear proyecto',
+    'Crear componentes',
+    'Crear servicio'
+  ];
+
+
+
 }
