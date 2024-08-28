@@ -8,25 +8,25 @@
         placeholder="Type new todo"
         autofocus
         type="text"
-       [formControl]="newTaskCtrl"
-       (keydown.enter)="changeHandler()"
-      />
+        [formControl]="newTaskCtrl"
+        (keydown.enter)="changeHandler()"
+        />
     </div>
   </header>
   <!-- <h1>{{filter()}}</h1> -->
   <div class="container todoapp-wrapper">
     <!-- This section should be hidden by default and shown when there are todos -->
-   <!--  <pre>
-      <code>
-        {{ tasks() | json }}
-      </code>
-    </pre> -->
-    <section class="main">
-      <ul class="todo-list">
+    <!--  <pre>
+    <code>
+      {{ tasks() | json }}
+    </code>
+  </pre> -->
+  <section class="main">
+    <ul class="todo-list">
+      @for (task of taskByFilter(); track task; let i = $index) {
         <li (dblclick)="updateTaskEditingMode(i)"
-         *ngFor="let task of taskByFilter(); index as i"
-         [class.editing]="task.editing"
-         [class.completed]="task.completed">
+          [class.editing]="task.editing"
+          [class.completed]="task.completed">
           <div class="view">
             <input class="toggle" type="checkbox" [checked]="task.completed" (change)="updateTask(i)"/>
             <label>{{ task.title }}</label>
@@ -34,41 +34,46 @@
           </div>
           <input class="edit" (keydown.enter)="updateTaskTest(i, $event)"[value]="task.title" />
         </li>
-        <!--
-        <li class="completed">
-          <div class="view">
-            <input class="toggle" type="checkbox" checked />
-            <label>Learn JavaScript</label>
-            <button class="destroy"></button>
-          </div>
-          <input class="edit" value="Learn JavaScript" />
-        </li>
-        <li>
-          <div class="view">
-            <input class="toggle" type="checkbox" />
-            <label>Buy a unicorn</label>
-            <button class="destroy"></button>
-          </div>
-          <input class="edit" value="Buy a unicorn" />
-        </li>
-        <li class="editing">
-          <div class="view">
-            <input class="toggle" type="checkbox" />
-            <label>Make dishes</label>
-            <button class="destroy"></button>
-          </div>
-          <input class="edit" value="Make dishes" />
-        </li>
+      }
+      <!--
+      <li class="completed">
+        <div class="view">
+          <input class="toggle" type="checkbox" checked />
+          <label>Learn JavaScript</label>
+          <button class="destroy"></button>
+        </div>
+        <input class="edit" value="Learn JavaScript" />
+      </li>
+      <li>
+        <div class="view">
+          <input class="toggle" type="checkbox" />
+          <label>Buy a unicorn</label>
+          <button class="destroy"></button>
+        </div>
+        <input class="edit" value="Buy a unicorn" />
+      </li>
+      <li class="editing">
+        <div class="view">
+          <input class="toggle" type="checkbox" />
+          <label>Make dishes</label>
+          <button class="destroy"></button>
+        </div>
+        <input class="edit" value="Make dishes" />
+      </li>
       -->
-      </ul>
-    </section>
-    <!-- This footer should be hidden by default and shown when there are todos -->
-    <footer class="footer" *ngIf="taskByFilter().length > 0">
+    </ul>
+  </section>
+  <!-- This footer should be hidden by default and shown when there are todos -->
+  @if (taskByFilter().length > 0) {
+    <footer class="footer">
       <!-- This should be `0 items left` by default -->
       <span class="todo-count">
         <strong>{{ taskByFilter().length}}</strong>
-        <span *ngIf="taskByFilter().length === 1; else elseBlock" > item </span>
-       <ng-template #elseBlock> items </ng-template>
+        @if (taskByFilter().length === 1) {
+          <span > item </span>
+        } @else {
+          items
+        }
       </span>
       <!-- Remove this if you don't implement routing -->
       <ul class="filters">
@@ -85,5 +90,6 @@
       <!-- Hidden if no completed items are left ↓ -->
       <button class="clear-completed">Clear completed</button>
     </footer>
-  </div>
+  }
+</div>
 </section>
